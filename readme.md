@@ -1,117 +1,108 @@
-﻿Notater
-=======
+﻿
+C-programmering
+===============
+*Teoriøving i TTK4235 Tilpassede datasystemer*
 
-Legge ut LF?
-    
-Noe mer om symboler/segmenter? .text vs .data?
-    
-    
+
 1: Verktøykjeden
-================
-Enten/eller (Tegn trinnene fra kildekode til kjørbart program)
- - Midtsemester 2008 oppg 5a-e
- - Eksamen 2012 oppg 5c
+----------------
 
-<br>
+ 1. *Fra Eksamen 2012, Oppgave 5c*:
+   - Prosessen for å lage et program (fil med kjørbar kode) fra filer med kildekode kan deles i flere trinn med egne verktøy for hvert trinn. Verktøyene assembler, kompilator, lenker og preprosessor inngår i den klassiske verktøykjeden for programmeringsspråket C. Beskriv rekkefølgen verktøyene må kjøres for å gjennomføre hele prosessen, og hvilke verktøy som må kjøres én gang per fil med kildekode.
+   - Gjerne tegn en figur. Alle fire verktøyene, kildekodefiler (\*.c), objektfiler (\*.o) og det kjørbare programmet skal være med i figuren.
 
- - Marker også hvor objektfiler (*.o) kommer inn.
 
- 
 2: Filer og Moduler
-===================
+-------------------
 
- - Hva er forskjellen mellom deklarasjoner og definisjoner?
+ 1. Hva er forskjellen mellom deklarasjoner og definisjoner?
+
+ 1. Er det noen fundamental forskjell mellom headerfiler (*.h) og c-filer?
  
- - Er det noen fundamental forskjell mellom headerfiler (*.h) og c-filer?
+ 1. Hva gjør `static`:
+   - På en variabel inni en funksjon
+   - På en global variabel (dvs utenfor en funksjon) eller en funksjon
 
- - Hvordan kan man lage en modul ved bruk av flere filer?
-   - Evt: Kont 2014 oppg 1b ("Hvilke mekanismer i C er egnet til å implementere modulariseringen...")
- 
-3: Warnings/Errors
-==================
+ 1. *Fra Eksamen 2012, Oppgave 5b*:
+![](2014_kont_1b_klassediagram.png)
+Hvilke mekanismer i programmeringsspråket C er egnet til å implementere den modulasiseringen (oppdelingen), avhengigheten og synligheten som dette klassediagrammet beskriver?
 
- - Hvilket verktøy (preprosessor, kompilator, assempler, lenker) kommer disse feilmeldingene fra?
-   - Undefined reference to ...
-   - file.h: No such file
-   - variable "x" undeclared
-   - Implicit declaration of function ...
+3: Warnings & Errors
+--------------------
 
- 
+ 1. Hvilket verktøy (preprosessor, kompilator, assembler, lenker) kommer disse feilmeldingene fra, og hva er den mest sannsynlige årsaken til feilmeldingen?
+   - `error: 'x' undeclared (first use in this function)`
+   - `warning: implicit declaration of function 'foo'`
+   - `undefined reference to 'foo'`
+   - `fatal error: file.h: No such file or directory`
+
+ 1. Hva er en "Segmentation fault"?
+
 4: C-kode
-=========
+---------
 
- - Hva er galt med denne koden?
+ 1. Hva er galt med denne koden?
 
-```C
-int sum(int arr[], int size){
-    int sum;
-    for(int i = 0; i < size; i++){
-        sum += arr[i];
+    ```C
+    int sum(int arr[], int size){
+        int sum;
+        for(int i = 0; i < size; i++){
+            sum += arr[i];
+        }
+        return sum;
     }
-    return sum;
-}
-```
+    ```
 
-5: Pekere
-=========
+ 1. Hva er forskjellen på `hello_1` og `hello_2`, og hvorfor vil en av disse ikke fungere?
 
- - Hva skriver denne koden ut?
- 
-```C
-int main(void){
-    int a = 42;
-    int * p = &a;
-    *p = 8;
-    printf("a = %d\n", a);
-}
-```
+    ```C
+    int main(void){
+        char * hello_1 = "hello";
+        hello_1[1] = 'a';
+        printf("%s\n", hello_1);
+        
+        char hello_2[] = "hello";
+        hello_2[1] = 'a';
+        printf("%s\n", hello_2);
+    }
+    ```
 
- - Hva skriver denne koden ut?
-   - **[For "virkelighetsfjernt"?]**
+ 1. Hva skriver denne koden ut?
 
-```C
-int a = 42;
+    ```C
+    int main(void){
+        int a = 42;
+        int * p = &a;
+        *p = 8;
+        printf("a = %d\n", a);
+    }
+    ```
 
-int foo(int * p){
-    int b = *p;
-    b += 6;
-    return b;
-}
-
-int main(void){
-    printf("foo(&a) = %d\n", foo(&a));
-    printf("a = %d\n", a);
-    return 0;
-}
-```
-
- - Hvilken operasjon utfører funksjonen [`rotate()`](rotate.c)? 
-   - **[For vanskelig?]**
-
-   
- - Hvorfor kræsjer dette programmet med en "Segmentation fault"?
- 
-```C
-int main(){
-    int * p;
-    printf("Value at p: %d\n", *p);
-}
-```
-
- - Hvilke av disse er gyldige?
+ 1. Hvilken operasjon utfører funksjonen [`rotate()`](rotate.c)?
 
 
-```C
-int * fortytwo(void){
-    int a = 42;
-    return &a;
-}
-```
-```C
-int * fortytwo(void){
-    int * a = malloc(sizeof(int));
-    *a = 42
-    return a;
-}
-```
- 
+ 1. Hvorfor kræsjer dette programmet med en "Segmentation fault"?
+
+    ```C
+    int main(){
+        int * p;
+        printf("Value at p: %d\n", *p);
+    }
+    ```
+
+ 1. Hvilke av disse er gyldige?
+
+    ```C
+    int * fortytwo(void){
+        int a = 42;
+        return &a;
+    }
+    ```
+    ```C
+    int * fortytwo(void){
+        int * a = malloc(sizeof(int));
+        *a = 42
+        return a;
+    }
+    ```
+
